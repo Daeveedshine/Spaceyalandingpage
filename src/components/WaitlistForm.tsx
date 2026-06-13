@@ -65,11 +65,11 @@ export function WaitlistForm({ variant = 'light' }: WaitlistFormProps) {
 
   const inputClasses = `w-full px-4 py-3 rounded-xl border focus:ring-2 outline-none transition-all ${
     variant === 'dark' 
-      ? 'border-emerald-700/50 focus:border-white focus:ring-emerald-400 placeholder:text-emerald-400/50 bg-emerald-800/50 text-white' 
-      : 'border-slate-300 focus:border-emerald-500 focus:ring-emerald-200 placeholder:text-slate-400 bg-white text-slate-900'
+      ? 'border-slate-800 focus:border-white focus:ring-slate-700 placeholder:text-slate-500 bg-slate-900 text-white' 
+      : 'border-slate-300 focus:border-black focus:ring-slate-200 placeholder:text-slate-400 bg-white text-slate-900'
   }`;
 
-  const labelClasses = `block text-sm font-medium mb-1.5 ${variant === 'dark' ? 'text-emerald-50' : 'text-slate-700'}`;
+  const labelClasses = `block text-sm font-medium mb-1.5 ${variant === 'dark' ? 'text-slate-300' : 'text-slate-700'}`;
 
   return (
     <div className="relative w-full max-w-md mx-auto">
@@ -82,8 +82,8 @@ export function WaitlistForm({ variant = 'light' }: WaitlistFormProps) {
             transition={{ type: 'spring', stiffness: 300, damping: 25 }}
             className={`flex flex-col items-center justify-center p-8 ${
               variant === 'dark' 
-                ? 'bg-white/10 backdrop-blur border border-emerald-700/50 text-white rounded-2xl shadow-lg' 
-                : 'bg-white border border-emerald-200 rounded-2xl shadow-sm text-center'
+                ? 'bg-black backdrop-blur border border-slate-800 text-white rounded-2xl shadow-lg' 
+                : 'bg-white border border-slate-200 rounded-2xl shadow-sm text-center'
             }`}
           >
             <motion.div 
@@ -91,7 +91,7 @@ export function WaitlistForm({ variant = 'light' }: WaitlistFormProps) {
               animate={{ scale: 1 }}
               transition={{ delay: 0.2, type: 'spring', stiffness: 300, damping: 20 }}
               className={`w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 ${
-                variant === 'dark' ? 'bg-emerald-500/20 text-emerald-400' : 'bg-emerald-50 text-emerald-700'
+                variant === 'dark' ? 'bg-slate-800 text-white' : 'bg-slate-100 text-black'
               }`}
             >
               <CheckCircle2 className="w-8 h-8" />
@@ -99,7 +99,7 @@ export function WaitlistForm({ variant = 'light' }: WaitlistFormProps) {
             <h3 className={`font-display font-semibold text-xl mb-2 ${variant === 'dark' ? 'text-white' : 'text-slate-900'}`}>
               You're on the list!
             </h3>
-            <p className={`${variant === 'dark' ? 'text-emerald-100/80' : 'text-slate-600'}`}>
+            <p className={`${variant === 'dark' ? 'text-slate-400' : 'text-slate-600'}`}>
               Thanks for sharing your details. We'll notify you as soon as Spaceya is ready for early access.
             </p>
           </motion.div>
@@ -122,8 +122,8 @@ export function WaitlistForm({ variant = 'light' }: WaitlistFormProps) {
               placeholder="Enter your email address"
               className={`flex-1 px-4 py-4 rounded-xl border focus:ring-2 outline-none transition-all ${
                 variant === 'dark' 
-                  ? 'border-emerald-700/50 focus:border-white focus:ring-emerald-400 placeholder:text-emerald-400/50 bg-emerald-800/80 text-white' 
-                  : 'border-slate-300 focus:border-emerald-500 focus:ring-emerald-200 placeholder:text-slate-400 bg-white text-slate-900'
+                  ? 'border-slate-800 focus:border-white focus:ring-slate-700 placeholder:text-slate-500 bg-slate-900 text-white' 
+                  : 'border-slate-300 focus:border-black focus:ring-slate-200 placeholder:text-slate-400 bg-white text-slate-900'
               }`}
               required
             />
@@ -131,8 +131,8 @@ export function WaitlistForm({ variant = 'light' }: WaitlistFormProps) {
               type="submit"
               className={`inline-flex items-center justify-center gap-2 px-8 py-4 font-bold rounded-xl transition-all active:scale-95 whitespace-nowrap shadow-sm hover:shadow-md ${
                 variant === 'dark'
-                  ? 'bg-white text-emerald-900 hover:bg-slate-50'
-                  : 'bg-emerald-700 hover:bg-emerald-800 text-white'
+                  ? 'bg-white text-black hover:bg-slate-200'
+                  : 'bg-black hover:bg-slate-800 text-white'
               }`}
             >
               Join Waitlist
@@ -151,7 +151,7 @@ export function WaitlistForm({ variant = 'light' }: WaitlistFormProps) {
             onSubmit={handleFinalSubmit}
             className={`flex flex-col gap-4 p-6 sm:p-8 text-left ${
               variant === 'dark' 
-                ? 'bg-white/10 backdrop-blur border border-emerald-700/50 rounded-2xl shadow-lg w-full' 
+                ? 'bg-black border border-slate-800 rounded-2xl shadow-lg w-full' 
                 : 'bg-white border border-slate-200 rounded-2xl shadow-xl shadow-slate-200/50 w-full'
             }`}
           >
@@ -159,7 +159,7 @@ export function WaitlistForm({ variant = 'light' }: WaitlistFormProps) {
               <h3 className={`font-display font-semibold text-lg ${variant === 'dark' ? 'text-white' : 'text-slate-900'}`}>
                 Almost there!
               </h3>
-              <p className={`text-sm ${variant === 'dark' ? 'text-emerald-100/70' : 'text-slate-500'}`}>
+              <p className={`text-sm ${variant === 'dark' ? 'text-slate-400' : 'text-slate-500'}`}>
                 Tell us a bit about your property business to secure your spot.
               </p>
             </div>
@@ -221,8 +221,8 @@ export function WaitlistForm({ variant = 'light' }: WaitlistFormProps) {
               <button
                 type="button"
                 onClick={() => setStep(1)}
-                className={`flex-1 py-3 px-4 rounded-xl font-medium transition-all ${
-                  variant === 'dark' ? 'bg-emerald-800/50 text-white hover:bg-emerald-800' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                className={`flex-1 py-3 px-4 rounded-xl font-medium transition-all border ${
+                  variant === 'dark' ? 'bg-black text-white hover:bg-slate-900 border-slate-800' : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border-slate-200'
                 }`}
               >
                 Back
@@ -234,8 +234,8 @@ export function WaitlistForm({ variant = 'light' }: WaitlistFormProps) {
                   isLoading ? 'opacity-70 cursor-not-allowed' : 'active:scale-[0.98]'
                 } ${
                   variant === 'dark'
-                    ? 'bg-white text-emerald-900 hover:bg-slate-50'
-                    : 'bg-emerald-700 hover:bg-emerald-800 text-white'
+                    ? 'bg-white text-black hover:bg-slate-200'
+                    : 'bg-black hover:bg-slate-800 text-white'
                 }`}
               >
                 {isLoading ? <Loader2 className="w-5 h-5 animate-spin" /> : 'Complete Registration'}

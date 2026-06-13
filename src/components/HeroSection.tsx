@@ -24,13 +24,13 @@ export function HeroSection() {
         animate="animate"
         variants={staggerContainer}
       >
-        <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 text-sm font-medium border border-emerald-200">
-          <span className="flex h-2 w-2 rounded-full bg-emerald-500"></span>
+        <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-900 text-sm font-medium border border-slate-200">
+          <span className="flex h-2 w-2 rounded-full bg-black"></span>
           Built for Nigerian Real Estate
         </motion.div>
         
         <motion.h1 variants={fadeInUp} className="font-display text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-slate-900 leading-[1.1]">
-          Modern property management, <span className="text-emerald-700">simplified.</span>
+          Modern property management, <span className="text-slate-500">simplified.</span>
         </motion.h1>
         
         <motion.p variants={fadeInUp} className="text-lg sm:text-xl text-slate-600 leading-relaxed max-w-2xl mx-auto">
