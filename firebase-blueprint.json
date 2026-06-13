@@ -1,0 +1,26 @@
+{
+  "entities": {
+    "WaitlistEntry": {
+      "title": "Waitlist Entry",
+      "description": "A user expressing interest in Spaceya",
+      "type": "object",
+      "properties": {
+        "fullName": { "type": "string", "description": "Full name of the user" },
+        "email": { "type": "string", "description": "Email address of the user" },
+        "phoneNumber": { "type": "string", "description": "Phone number" },
+        "companyName": { "type": "string", "description": "Name of their company" },
+        "userType": { "type": "string", "description": "Type of user (landlord, property_manager, agency)" },
+        "propertyCount": { "type": "string", "description": "Number of properties managed" },
+        "mainChallenge": { "type": "string", "description": "Main challenge faced" },
+        "timestamp": { "type": "string", "format": "date-time", "description": "Time of submission" }
+      },
+      "required": ["fullName", "email", "phoneNumber", "userType", "propertyCount", "timestamp"]
+    }
+  },
+  "firestore": {
+    "waitlist/{waitlistId}": {
+      "schema": { "$ref": "#/entities/WaitlistEntry" },
+      "description": "Waitlist registrations"
+    }
+  }
+}

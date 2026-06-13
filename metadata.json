@@ -1,0 +1,6 @@
+{
+  "name": "Spaceya",
+  "description": "Property management platform for Nigerian landlords and agencies. Waitlist landing page.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
