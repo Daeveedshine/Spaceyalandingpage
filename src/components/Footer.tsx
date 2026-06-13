@@ -1,4 +1,4 @@
-import { Building2 } from 'lucide-react';
+import { Logo } from './Logo';
 
 export function Footer() {
   return (
@@ -7,7 +7,7 @@ export function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-black rounded-lg flex items-center justify-center text-white">
-              <Building2 className="w-5 h-5" />
+              <Logo className="w-5 h-5" />
             </div>
             <span className="font-display font-bold text-xl tracking-tight text-slate-900">Spaceya</span>
           </div>
