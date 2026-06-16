@@ -11,6 +11,19 @@ export function Footer() {
             </div>
             <span className="font-display font-bold text-xl tracking-tight text-slate-900">Spaceya</span>
           </div>
+          
+          <div className="flex items-center gap-6">
+            <a href="#features" className="text-sm font-medium text-slate-600 hover:text-black transition-colors">
+              Features
+            </a>
+            <a href="#testimonials" className="text-sm font-medium text-slate-600 hover:text-black transition-colors">
+              Testimonials
+            </a>
+            <a href="#faq" className="text-sm font-medium text-slate-600 hover:text-black transition-colors">
+              FAQ
+            </a>
+          </div>
+
           <div className="text-slate-500 text-sm">
             © {new Date().getFullYear()} Spaceya. All rights reserved.
           </div>

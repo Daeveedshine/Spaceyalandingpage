@@ -1,7 +1,15 @@
+import { motion } from 'motion/react';
+
 export function SocialProofSection() {
   return (
-    <section className="py-24 bg-black text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl">
+    <section id="testimonials" className="py-24 bg-black text-white overflow-hidden">
+      <motion.div 
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6 }}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center max-w-4xl"
+      >
         <h2 className="font-display text-3xl md:text-4xl font-bold mb-8">Trusted by property professionals</h2>
         <div className="grid sm:grid-cols-3 gap-8 py-8 border-y border-slate-800">
           <div className="space-y-2">
@@ -20,7 +28,7 @@ export function SocialProofSection() {
         <p className="mt-8 text-lg text-slate-300 max-w-2xl mx-auto">
           "We are building Spaceya because the Nigerian real estate market deserves software that matches the ambition of its landlords and agencies."
         </p>
-      </div>
+      </motion.div>
     </section>
   );
 }

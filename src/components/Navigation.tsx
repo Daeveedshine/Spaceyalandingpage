@@ -10,9 +10,25 @@ export function Navigation() {
           </div>
           <span className="font-display font-bold text-xl tracking-tight text-slate-900">Spaceya</span>
         </div>
-        <a href="#join" className="text-sm font-medium text-black hover:text-slate-600 transition-colors">
-          Join Waitlist
-        </a>
+        <div className="hidden md:flex items-center gap-8">
+          <a href="#features" className="text-sm font-medium text-slate-600 hover:text-black transition-colors">
+            Features
+          </a>
+          <a href="#testimonials" className="text-sm font-medium text-slate-600 hover:text-black transition-colors">
+            Testimonials
+          </a>
+          <a href="#faq" className="text-sm font-medium text-slate-600 hover:text-black transition-colors">
+            FAQ
+          </a>
+          <a href="#join" className="text-sm font-medium text-black hover:text-slate-600 transition-colors">
+             Waitlist
+          </a>
+        </div>
+        <div className="md:hidden">
+          <a href="#join" className="text-sm font-medium text-black hover:text-slate-600 transition-colors">
+            Join Waitlist
+          </a>
+        </div>
       </div>
     </nav>
   );

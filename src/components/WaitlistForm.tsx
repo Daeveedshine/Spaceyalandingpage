@@ -11,7 +11,8 @@ interface WaitlistFormProps {
 export function WaitlistForm({ variant = 'light' }: WaitlistFormProps) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
   
   // Form fields
   const [fullName, setFullName] = useState('');
@@ -22,10 +23,37 @@ export function WaitlistForm({ variant = 'light' }: WaitlistFormProps) {
   const [propertyCount, setPropertyCount] = useState('1-10');
   const [mainChallenge, setMainChallenge] = useState('');
 
+  const validate = () => {
+    const err: Record<string, string> = {};
+    if (!fullName.trim()) err.fullName = 'Full name is required';
+    else if (fullName.trim().length < 2) err.fullName = 'Please enter your full name';
+    
+    if (!email.trim()) err.email = 'Email address is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) err.email = 'Please enter a valid email address';
+    
+    if (!phoneNumber.trim()) err.phoneNumber = 'Phone number is required';
+    else if (!/^\+?[\d\s-]{7,}$/.test(phoneNumber)) err.phoneNumber = 'Please enter a valid phone number';
+    
+    return err;
+  };
+
+  const errors = validate();
+
   const handleFinalSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    setTouched({
+      fullName: true,
+      email: true,
+      phoneNumber: true
+    });
+
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
+
     setIsLoading(true);
-    setError(null);
+    setSubmitError(null);
 
     try {
       const waitlistRef = doc(collection(db, 'waitlist'));
@@ -46,9 +74,9 @@ export function WaitlistForm({ variant = 'light' }: WaitlistFormProps) {
       // If it's our custom JSON error string, we can try parsing it or just display a generic user error
       try {
         const parsed = JSON.parse(err.message);
-        setError("Unable to submit. Please ensure all required fields are correct.");
+        setSubmitError("Unable to submit. Please ensure all required fields are correct.");
       } catch {
-        setError(err.message || "An unexpected error occurred.");
+        setSubmitError(err.message || "An unexpected error occurred.");
       }
       handleFirestoreError(err, OperationType.CREATE, 'waitlist');
     } finally {
@@ -56,11 +84,14 @@ export function WaitlistForm({ variant = 'light' }: WaitlistFormProps) {
     }
   };
 
-  const inputClasses = `w-full px-4 py-3 rounded-xl border focus:ring-2 outline-none transition-all ${
-    variant === 'dark' 
-      ? 'border-slate-800 focus:border-white focus:ring-slate-700 placeholder:text-slate-500 bg-slate-900 text-white' 
-      : 'border-slate-300 focus:border-black focus:ring-slate-200 placeholder:text-slate-400 bg-white text-slate-900'
-  }`;
+  const getInputClasses = (fieldName: string) => {
+    const hasError = touched[fieldName] && errors[fieldName];
+    const baseClasses = "w-full px-4 py-3 rounded-xl border focus:ring-2 outline-none transition-all";
+    if (variant === 'dark') {
+      return `${baseClasses} ${hasError ? 'border-red-500 focus:border-red-500 focus:ring-red-500/20' : 'border-slate-800 focus:border-white focus:ring-slate-700'} placeholder:text-slate-500 bg-slate-900 text-white`;
+    }
+    return `${baseClasses} ${hasError ? 'border-red-500 focus:border-red-500 focus:ring-red-200' : 'border-slate-300 focus:border-black focus:ring-slate-200'} placeholder:text-slate-400 bg-white text-slate-900`;
+  };
 
   const labelClasses = `block text-sm font-medium mb-1.5 ${variant === 'dark' ? 'text-slate-300' : 'text-slate-700'}`;
 
@@ -119,35 +150,44 @@ export function WaitlistForm({ variant = 'light' }: WaitlistFormProps) {
               </p>
             </div>
 
-            {error && (
+            {submitError && (
               <div className="p-3 mb-2 text-sm font-medium rounded-lg bg-red-50 text-red-600 border border-red-200 text-center">
-                {error}
+                {submitError}
               </div>
             )}
 
             <div>
-              <label className={labelClasses}>Full Name</label>
-              <input type="text" required value={fullName} onChange={e => setFullName(e.target.value)} className={inputClasses} placeholder="John Doe" />
+              <div className="flex justify-between items-baseline mb-1.5">
+                <label className={`block text-sm font-medium ${variant === 'dark' ? 'text-slate-300' : 'text-slate-700'}`}>Full Name</label>
+                {touched.fullName && errors.fullName && <span className="text-xs text-red-500 font-medium">{errors.fullName}</span>}
+              </div>
+              <input type="text" required value={fullName} onChange={e => setFullName(e.target.value)} onBlur={() => setTouched({ ...touched, fullName: true })} className={getInputClasses('fullName')} placeholder="John Doe" />
             </div>
 
             <div>
-              <label className={labelClasses}>Email Address</label>
-              <input type="email" required value={email} onChange={e => setEmail(e.target.value)} className={inputClasses} placeholder="john@example.com" />
+              <div className="flex justify-between items-baseline mb-1.5">
+                <label className={`block text-sm font-medium ${variant === 'dark' ? 'text-slate-300' : 'text-slate-700'}`}>Email Address</label>
+                {touched.email && errors.email && <span className="text-xs text-red-500 font-medium">{errors.email}</span>}
+              </div>
+              <input type="email" required value={email} onChange={e => setEmail(e.target.value)} onBlur={() => setTouched({ ...touched, email: true })} className={getInputClasses('email')} placeholder="john@example.com" />
             </div>
 
             <div>
-              <label className={labelClasses}>Phone Number</label>
-              <input type="tel" required value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} className={inputClasses} placeholder="+234..." />
+              <div className="flex justify-between items-baseline mb-1.5">
+                <label className={`block text-sm font-medium ${variant === 'dark' ? 'text-slate-300' : 'text-slate-700'}`}>Phone Number</label>
+                {touched.phoneNumber && errors.phoneNumber && <span className="text-xs text-red-500 font-medium">{errors.phoneNumber}</span>}
+              </div>
+              <input type="tel" required value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)} onBlur={() => setTouched({ ...touched, phoneNumber: true })} className={getInputClasses('phoneNumber')} placeholder="+234..." />
             </div>
 
             <div>
               <label className={labelClasses}>Company Name</label>
-              <input type="text" value={companyName} onChange={e => setCompanyName(e.target.value)} className={inputClasses} placeholder="Spaceya Properties Ltd." />
+              <input type="text" value={companyName} onChange={e => setCompanyName(e.target.value)} className={getInputClasses('companyName')} placeholder="Spaceya Properties Ltd." />
             </div>
 
             <div>
               <label className={labelClasses}>Are You A?</label>
-              <select value={userType} onChange={e => setUserType(e.target.value)} className={inputClasses} required>
+              <select value={userType} onChange={e => setUserType(e.target.value)} className={getInputClasses('userType')} required>
                 <option value="landlord">Landlord</option>
                 <option value="property_manager">Property Manager</option>
                 <option value="agency">Real Estate Agency</option>
@@ -157,7 +197,7 @@ export function WaitlistForm({ variant = 'light' }: WaitlistFormProps) {
 
             <div>
               <label className={labelClasses}>How Many Properties Do You Manage?</label>
-              <select value={propertyCount} onChange={e => setPropertyCount(e.target.value)} className={inputClasses} required>
+              <select value={propertyCount} onChange={e => setPropertyCount(e.target.value)} className={getInputClasses('propertyCount')} required>
                 <option value="1-10">1 to 10</option>
                 <option value="11-50">11 to 50</option>
                 <option value="51-100">51 to 100</option>
@@ -170,7 +210,7 @@ export function WaitlistForm({ variant = 'light' }: WaitlistFormProps) {
               <textarea 
                 value={mainChallenge} 
                 onChange={e => setMainChallenge(e.target.value)} 
-                className={`${inputClasses} resize-none h-24`} 
+                className={`${getInputClasses('mainChallenge')} resize-none h-24`} 
                 placeholder="Share your challenges..."
               />
             </div>

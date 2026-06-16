@@ -1,4 +1,5 @@
 import { Home, Users, Wallet, Wrench, BarChart3, CheckCircle2 } from 'lucide-react';
+import { motion } from 'motion/react';
 
 const features = [
   {
@@ -33,26 +34,61 @@ const features = [
   }
 ];
 
+const staggerContainer = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const fadeInUp = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { 
+    opacity: 1, 
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" }
+  }
+};
+
 export function BenefitsSection() {
   return (
-    <section className="py-24 bg-white border-y border-slate-200">
+    <section id="features" className="py-16 sm:py-24 bg-white border-y border-slate-200 overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="font-display text-3xl md:text-4xl font-bold text-slate-900 mb-4">Everything you need to manage your portfolio</h2>
-          <p className="text-lg text-slate-600">Replace spreadsheets and endless WhatsApp threads with a single, reliable system of record.</p>
-        </div>
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={fadeInUp}
+          className="text-center max-w-3xl mx-auto mb-12 sm:mb-16"
+        >
+          <h2 className="font-display text-3xl sm:text-4xl font-bold text-slate-900 mb-4 sm:mb-6 leading-tight">Everything you need to manage your portfolio</h2>
+          <p className="text-base sm:text-lg text-slate-600 px-2 sm:px-0">Replace spreadsheets and endless WhatsApp threads with a single, reliable system of record.</p>
+        </motion.div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <motion.div 
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-100px" }}
+          variants={staggerContainer}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8"
+        >
           {features.map((feature, idx) => (
-            <div key={idx} className="p-6 rounded-2xl bg-slate-50 border border-slate-100 transition-colors hover:border-slate-300">
-              <div className="w-12 h-12 bg-slate-200 rounded-xl flex items-center justify-center mb-6">
+            <motion.div 
+              key={idx} 
+              variants={fadeInUp}
+              className="p-6 sm:p-8 rounded-2xl bg-slate-50 border border-slate-100 transition-colors hover:border-slate-300 flex flex-col items-center text-center sm:items-start sm:text-left"
+            >
+              <div className="w-12 h-12 sm:w-14 sm:h-14 bg-slate-200 rounded-xl flex items-center justify-center mb-5 sm:mb-6 shrink-0">
                 {feature.icon}
               </div>
-              <h3 className="font-display font-semibold text-xl text-slate-900 mb-3">{feature.title}</h3>
-              <p className="text-slate-600 leading-relaxed">{feature.description}</p>
-            </div>
+              <h3 className="font-display font-semibold text-lg sm:text-xl text-slate-900 mb-2 sm:mb-3">{feature.title}</h3>
+              <p className="text-sm sm:text-base text-slate-600 leading-relaxed">{feature.description}</p>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
