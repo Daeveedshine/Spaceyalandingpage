@@ -16,17 +16,11 @@ service cloud.firestore {
     
     // Entity Validators
     function isValidWaitlistEntry(data) {
-      return data.keys().hasAll(['fullName', 'email', 'phoneNumber', 'userType', 'propertyCount', 'timestamp']) &&
-             data.keys().size() >= 6 &&
-             data.keys().size() <= 8 &&
-             data.fullName is string && data.fullName.size() > 0 && data.fullName.size() <= 100 &&
-             data.email is string && data.email.size() <= 150 && data.email.matches('^[^@]+@[^@]+$') &&
-             data.phoneNumber is string && data.phoneNumber.size() <= 20 &&
-             data.userType is string && data.userType.size() <= 50 &&
-             data.propertyCount is string && data.propertyCount.size() <= 50 &&
-             data.timestamp == request.time &&
-             ( !('companyName' in data) || (data.companyName is string && data.companyName.size() <= 100) ) &&
-             ( !('mainChallenge' in data) || (data.mainChallenge is string && data.mainChallenge.size() <= 500) );
+      return data.fullName is string &&
+             data.email is string &&
+             data.phoneNumber is string &&
+             data.userType is string && 
+             data.propertyCount is string;
     }
 
     // Waitlist collection
